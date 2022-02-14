@@ -69,9 +69,9 @@ WORDLE ANSWER : "AMBER"
 
 ## Features
 
-- Usually guesses b/w 3-4 turns
+- Usually guesses b/w 3-4 moves
 - Guessing pattern based on the Entropy Function in Information Theory
-- User Freidnly CLI
+- User Friendly CLI
 
 ## Requirements
 
