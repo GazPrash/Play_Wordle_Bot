@@ -5,7 +5,10 @@ from guess_entropy import entropy_function
 
 
 class WordleGuessBot:
-    def __init__(self) -> None:
+    def __init__(self, starter=None) -> None:
+        # use this variable if you already know the answer
+        self.starter = starter
+
         # loading_data
         self.available_words = pd.read_csv("main_data/Allowed_Words.csv")
         self.available_words = self.available_words["0"].to_list()
@@ -89,11 +92,31 @@ class WordleGuessBot:
 
             if refactored_list != []:
                 self.recieved_guesses = entropy_function(refactored_list, self.freqs)
-
                 print(self.recieved_guesses[:10])
                 print("\n ** NOW MAKING A GUESS ** \n")
 
-                print(f"RECOMMENDED GUESS : {self.recieved_guesses[0]}")
+                sec_prompt = ""
+                iter = 0
+                while sec_prompt.lower() != "y":
+                    guess_made = self.recieved_guesses[iter]
+                    print(f"RECOMMENDED GUESS : {guess_made}")
+                    sec_prompt = input(
+                        "Press 'Y/y' to make the guess or 'N/n' for the next guess :"
+                    )
+                    if sec_prompt.lower() == "n":
+                        iter += 1
+
+                if self.starter is not None:
+                    if self.starter == guess_made[0]:
+                        print("GUESS WAS SUCCESSFULL!")
+                        return
 
             i += 1
-            prompt = input("Press Enter to Conitune or 'X' to Exit the Program >> ")
+            if self.starter is not None:
+                prompt = input(
+                    """Guess was Unsuccessful Remove or Add Characters according to the Wordle Results 
+    (Note : Press Enter to continue or 'X' to Exit the Program) \n>> """
+                )
+            else:
+                prompt = input("Continue ? Enter/X >>")
+
