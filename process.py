@@ -53,16 +53,16 @@ class WordleGuessBot:
             append_sel_indices = []
 
             for char in input("REMOVE CHARS : "):
-                remove_chars.append(char)
+                remove_chars.append(char.lower())
 
             for char2 in input("ADD CHARS : "):
-                append_chars.append(char2)
+                append_chars.append(char2.lower())
 
-            for char3 in input("INDICES OF INCLUDED CHARS : "):
-                if char3 == "*":
+            for ind in input("INDICES OF INCLUDED CHARS : "):
+                if ind == "*":
                     append_sel_indices.append(-1)
                     continue
-                append_sel_indices.append(int(char3))
+                append_sel_indices.append(int(ind))
 
             if refactored_list != []:
                 self.available_words = list(
@@ -101,7 +101,7 @@ class WordleGuessBot:
                     guess_made = self.recieved_guesses[iter]
                     print(f"RECOMMENDED GUESS : {guess_made}")
                     sec_prompt = input(
-                        "Press 'Y/y' to make the guess or 'N/n' for the next guess :"
+                        "Press 'Y/y' to make the guess or 'N/n' for the next guess : "
                     )
                     if sec_prompt.lower() == "n":
                         iter += 1
@@ -118,5 +118,8 @@ class WordleGuessBot:
     (Note : Press Enter to continue or 'X' to Exit the Program) \n>> """
                 )
             else:
-                prompt = input("Continue ? Enter/X >>")
+                prompt = input(
+                    """Continue the process ? (Press Anything) 
+    (Note : Press Enter to continue or 'X' to Exit the Program) \n>> """
+                )
 
