@@ -7,7 +7,7 @@ from guess_entropy import entropy_function
 class WordleGuessBot:
     def __init__(self, starter=None) -> None:
         # use this variable if you already know the answer
-        self.starter = starter
+        self.starter = starter.lower()
 
         # loading_data
         self.available_words = pd.read_csv("main_data/Allowed_Words.csv")
@@ -64,7 +64,7 @@ class WordleGuessBot:
                     continue
                 append_sel_indices.append(int(ind))
 
-            if refactored_list != []:
+            if refactored_list:
                 self.available_words = list(
                     set(refactored_list).intersection(self.available_words)
                 )
@@ -90,7 +90,7 @@ class WordleGuessBot:
                         app_word = True
             # print(refactored_list)
 
-            if refactored_list != []:
+            if refactored_list:
                 self.recieved_guesses = entropy_function(refactored_list, self.freqs)
                 print(self.recieved_guesses[:10])
                 print("\n ** NOW MAKING A GUESS ** \n")
