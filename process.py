@@ -9,6 +9,8 @@ class WordleGuessBot:
         # use this variable if you already know the answer
         if starter is not None:
             self.starter = starter.lower()
+        else:
+            self.starter = None
 
         # loading_data
         self.available_words = pd.read_csv("main_data/Allowed_Words.csv")
