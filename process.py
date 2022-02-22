@@ -45,15 +45,20 @@ class WordleGuessBot:
             "SENOR",
         ]
 
-        attempt = rd.choice(starters)
-        print(f"ATTEMPT MADE : {attempt}")
+        attempt = rd.choice(starters).lower()
+        print(f"ATTEMPT MADE : {attempt.upper()}")
 
         i = 0
         while prompt.upper() != "X":
             app_word = True
+            yellow_char = False
+
             append_chars = []
             remove_chars = []
+            yellow_chars = []
+
             append_sel_indices = []
+            yellow_char_indices = []
 
             for char in input("REMOVE CHARS : "):
                 remove_chars.append(char.lower())
@@ -67,12 +72,18 @@ class WordleGuessBot:
                     continue
                 append_sel_indices.append(int(ind))
 
+            for char3 in input("ADD YELLOW CHARS : "):
+                yellow_chars.append(char3.lower())
+
+            for ch in yellow_chars:
+                yellow_char_indices.append(attempt.index(ch.lower()))
+
             if refactored_list:
                 self.available_words = list(
                     set(refactored_list).intersection(self.available_words)
                 )
                 refactored_list = []
-
+            
             for word in self.available_words:
                 if (
                     set(remove_chars).intersection(word) == set()
@@ -83,6 +94,11 @@ class WordleGuessBot:
                             if ch not in word:
                                 app_word = False
                                 break
+                            elif yellow_char:
+                                for y_ch, y_iter in zip(yellow_chars, yellow_char_indices):
+                                    if word[y_iter] == y_ch:
+                                        app_word = False
+                                        break
                         else:
                             if word[ind] != ch:
                                 app_word = False
@@ -102,7 +118,8 @@ class WordleGuessBot:
                 iter = 0
                 while sec_prompt.lower() != "y":
                     guess_made = self.recieved_guesses[iter]
-                    print(f"RECOMMENDED GUESS : {guess_made}")
+                    print(f"RECOMMENDED GUESS : {guess_made[0].upper()} • (EF - {guess_made[1]})")
+                    attempt = guess_made[0]
                     sec_prompt = input(
                         "Press 'Y/y' to make the guess or 'N/n' for the next guess : "
                     )

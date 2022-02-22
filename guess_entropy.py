@@ -2,7 +2,7 @@ from math import log2
 
 
 def entropy_function(selection, word_freq):
-    # Entropy (H) = p(x) * log2(1/p(x))
+    # Entropy (H) = p(x) * log2(1/p(x)) defined as per Information Theory.
     res_information = {}
     for word in word_freq["Word"]:
         word = word.lower()
